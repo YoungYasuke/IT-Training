@@ -1,0 +1,44 @@
+$TestScores = import-csv -path 'Test.csv'
+
+$TestScores
+
+Name   Maths English PE
+----   ----- ------- --
+Craig  45    23      87
+Dylan  65    64      65
+Mitch  87    34      43
+Daniel 23    34      76
+Kola   99    66      77
+
+$TestScores2 = $TestScores | Where {$_.Name -eq 'Kola' -or $_.Name -eq 'Dylan'}
+
+$TestScores2 
+
+Name  Maths English PE
+----  ----- ------- --
+Dylan 65    64      65
+Kola  99    66      77
+
+
+$TestScores | ForEach {$_.PE = [int]$_.PE}
+$TestScores | ForEach {$_.PE = [int]$_.Maths}
+$TestScores | ForEach {$_.PE = [int]$_.English}
+
+
+$TestScores2 | ForEach {$_.Maths}| Measure -Average
+
+
+Count    : 2
+Average  : 82
+
+
+$TestScores2 | ForEach {$_.PE}| Measure -Average
+
+Count    : 2
+Average  : 71
+
+
+$TestScores2 | ForEach {$_.English}| Measure -Average
+
+Count    : 2
+Average  : 65
